@@ -1,0 +1,14 @@
+
+1. As a user, I want to manage a movie collection to better oganise my movie data.
+
+    How to store the movie data?
+        Use an array?
+
+2. As a user, I want to add a movie to my collection.
+
+    Store movies as an object (include title and actor name).
+        Add an object to an array?
+
+3. As a user, I want show a list of movies that I have created.
+
+        Console.log the array of movies.
