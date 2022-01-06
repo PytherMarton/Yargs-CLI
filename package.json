@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
+    "mongodb": "^4.2.2",
+    "mongosh": "^1.1.7",
     "yargs": "^17.3.1"
   }
 }

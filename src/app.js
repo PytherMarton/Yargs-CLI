@@ -7,35 +7,25 @@ const {
   deleteMovies,
   searchMovies,
 } = require("./utils/index");
+const connection = require("./db/connection");
+const command = process.argv[2];
 
-const app = () => {
-  try {
-    let movieArr;
+const app = async (args) => {
     try {
-      movieArr = JSON.parse(fs.readFileSync("./storage.json"));
-    } catch (error) {
-      movieArr = [];
-    }
+        if (command === "add") {
+            const movieObj = {title: args.title, actor: args.actor}
+            await connection(addMovie, movieObj);
+        } else if (command === "update") {
+            await connection(updateMovies);
+        } else if (command === "list") {
+           await connection(listMovies);
+        } else if (command === "delete") {
+            const movieObj = {title: args.title, actor: args.actor}
+            await connection(deleteMovies, movieObj);
+        }
 
-    try {
-      if (process.argv[2] === "add") {
-        addMovie(movieArr, {
-          title: yargs.argv.title,
-          actor: yargs.argv.actor,
-        });
-      } else if (process.argv[2] === "list") {
-        listMovies();
-      } else if (process.argv[2] === "update") {
-        updateMovies();
-      } else if (process.argv[2] === "delete") {
-        deleteMovies();
-      } else if (process.argv[2] === "search") {
-        searchMovies();
-      }
     } catch (error) {}
-  } catch (error) {
-    console.log(error);
-  }
+
 };
 
-app();
+app(yargs.argv);
