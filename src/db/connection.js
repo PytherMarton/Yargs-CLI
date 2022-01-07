@@ -1,17 +1,14 @@
 require("dotenv").config();
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 
-const connection = async (crudFunc, movieObj) => {
+const connection = async () => {
     try {
-        const client = new MongoClient(process.env.MONGO_URI);
-        await client.connect();
-        const db = client.db("myFirstDatabase");
-        const collection = db.collection("Movies");
-        await crudFunc(collection, movieObj);
-        client.close();
+        await mongoose.connect(process.env.MONGO_URI);
     } catch (error) {
         console.log(error);
-    }
+    } 
 }
+
+connection();
 
 module.exports = connection;

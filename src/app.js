@@ -8,20 +8,19 @@ const {
   searchMovies,
 } = require("./utils/index");
 const connection = require("./db/connection");
-const command = process.argv[2];
+const command = yargs.argv._[0];
+
 
 const app = async (args) => {
     try {
         if (command === "add") {
-            const movieObj = {title: args.title, actor: args.actor}
-            await connection(addMovie, movieObj);
+           await addMovie({title: args.title, actor: args.actor});
         } else if (command === "update") {
-            await connection(updateMovies);
+            await updateMovies();
         } else if (command === "list") {
-           await connection(listMovies);
+           await listMovies();
         } else if (command === "delete") {
-            const movieObj = {title: args.title, actor: args.actor}
-            await connection(deleteMovies, movieObj);
+            await deleteMovies();
         }
 
     } catch (error) {}

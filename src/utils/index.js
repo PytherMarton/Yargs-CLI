@@ -1,39 +1,41 @@
 const fs = require("fs");
-const { Db } = require("mongodb");
-const { argv } = require("process");
-const connection = require("../db/connection");
+const Movie = require("../models/models");
+const connection = require("../db/connection")
+const mongoose = require("mongoose");
 
-const addMovie = async (collection, movieObj) => {
+const addMovie = async (movieObj) => {
   try {
-      await collection.insertOne(movieObj)
-      console.log(`Successfully added ${movieObj.title}.`)
+      const newMovie = new Movie(movieObj);
+      await newMovie.save();
+      console.log("New movie: ", newMovie)
   } catch (error) {
     console.log(error);
   }
 };
 
-const listMovies = async (collection, movieObj) => {
+const listMovies = () => {
   try {
-    const result = await collection.find(movieObj).toArray()
-    console.log(result)
+   let list = Movie.find({}).then(data => console.log(data))
+   console.log(list)
+  
     
   } catch (error) {
     console.log(error);
   }
 };
 
-const updateMovies = async (collection, movieObj) => {
+const updateMovies = async () => {
   try {
-    await collection.updateOne({title: "Movie1"}, {$set: {actor: "Actor99"}})
+    let update = Movie.updateOne({title: process.argv[4]}, {actor: process.argv[6]}).then(res => console.log(`${process.argv[4]} has been updated.`));
   } catch (error) {
     console.log(error);
   }
 };
 
-const deleteMovies = async (collection, movieObj) => {
+const deleteMovies = async () => {
   try {
-    await collection.deleteOne(movieObj)
-    console.log(`${movieObj.title} has ben deleted.`)
+    let remove = Movie.remove({title: process.argv[4]}).then(msg => console.log(msg));
+    console.log(remove)
   } catch (error) {
     console.log(error);
   }
