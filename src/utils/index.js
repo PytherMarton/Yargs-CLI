@@ -34,7 +34,7 @@ const updateMovies = async () => {
 
 const deleteMovies = async () => {
   try {
-    let remove = Movie.remove({title: process.argv[4]}).then(msg => console.log(msg));
+    let remove = Movie.deleteOne({title: process.argv[4]}).then(msg => console.log(`${process.argv[4]} has been deleted.`));
     console.log(remove)
   } catch (error) {
     console.log(error);
